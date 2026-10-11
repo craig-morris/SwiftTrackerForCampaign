@@ -1,0 +1,16 @@
+name = "swift-tracker-for-campaign"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "swift_tracker_db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[vars]
+TRACKING_BASE_URL = "https://track.yourdomain.com"
+TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID"
+ADMIN_PASSWORD_HASH = "YOUR_SHA256_HASH"
+SPAM_THRESHOLD = "1"
+FALLBACK_DOMAIN = "https://track-fallback.pages.dev"

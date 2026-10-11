@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftTrackerForCampaign — Email Tracking Framework</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#3B82F6"/>
+          <path d="M8 12l8 5 8-5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <rect x="8" y="10" width="16" height="12" rx="2" stroke="white" stroke-width="2" fill="none"/>
+        </svg>
+        <span>SwiftTracker</span>
+      </a>
+      <nav class="header-nav">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/login.html" class="btn btn-sm btn-outline">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Email Tracking Framework</div>
+      <h1>Track every open, click, and conversion.</h1>
+      <p class="hero-subtext">
+        SwiftTrackerForCampaign gives you full visibility into your transactional email campaigns.
+        No SMTP required. Just pure tracking infrastructure on Cloudflare's edge.
+      </p>
+      <div class="hero-actions">
+        <a href="/login.html" class="btn btn-primary btn-lg">Open Dashboard</a>
+        <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+      </div>
+    </div>
+  </main>
+
+  <section class="features" id="features">
+    <div class="section-inner">
+      <h2 class="section-title">Everything you need to track</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📬</div>
+          <h3>Open Tracking</h3>
+          <p>Invisible 1×1 pixel tracks every email open with IP, country, device, and timestamp data.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Click Tracking</h3>
+          <p>Every link is wrapped and logged. Know exactly who clicked what, and when.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚫</div>
+          <h3>Unsubscribe Management</h3>
+          <p>One-click unsubscribe with automatic suppression list management.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Spam Protection</h3>
+          <p>Automatic spam reporting, link health checks, and instant domain rotation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Telegram Alerts</h3>
+          <p>Real-time notifications for opens, clicks, unsubscribes, and health issues.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Edge-Deployed</h3>
+          <p>Runs on Cloudflare Pages with D1 database. Global, fast, and serverless.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quickstart">
+    <div class="section-inner">
+      <h2 class="section-title">Quick Start</h2>
+      <p class="section-subtext">Add tracking to any email in three simple steps.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Add the tracking pixel</h3>
+          <code class="code-block">&lt;img src="https://track.yourdomain.com/api/track/open?tid=ORDER123&amp;email=customer@example.com&amp;subject=Your+Order" width="1" height="1" /&gt;</code>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Wrap your links</h3>
+          <code class="code-block">&lt;a href="https://track.yourdomain.com/api/track/click?tid=ORDER123&amp;email=customer@example.com&amp;url=https://yoursite.com/offer"&gt;View Offer&lt;/a&gt;</code>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Add unsubscribe</h3>
+          <code class="code-block">&lt;a href="https://track.yourdomain.com/api/track/unsubscribe?tid=ORDER123&amp;email=customer@example.com"&gt;Unsubscribe&lt;/a&gt;</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#3B82F6"/>
+          <path d="M8 12l8 5 8-5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <rect x="8" y="10" width="16" height="12" rx="2" stroke="white" stroke-width="2" fill="none"/>
+        </svg>
+        <span>SwiftTrackerForCampaign</span>
+      </div>
+      <div class="footer-links">
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/login.html">Sign In</a>
+        <a href="/api/health/check">Health Check</a>
+      </div>
+      <p class="footer-copy">Built on Cloudflare Pages. © 2025 SwiftTrackerForCampaign.</p>
+    </div>
+  </footer>
+</body>
+</html>

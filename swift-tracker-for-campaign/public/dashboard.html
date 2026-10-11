@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — SwiftTracker</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="app">
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- MODAL CONTAINER -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-icon" id="modalIcon">⚠️</div>
+      <h3 id="modalTitle">Confirm</h3>
+      <p id="modalMessage">Are you sure?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="modalCancel">Cancel</button>
+        <button class="btn btn-danger" id="modalConfirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="32" y2="32">
+              <stop offset="0" stop-color="#6366F1"/>
+              <stop offset="1" stop-color="#8B5CF6"/>
+            </linearGradient>
+          </defs>
+          <rect width="32" height="32" rx="8" fill="url(#lg)"/>
+          <path d="M8 12l8 5 8-5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <rect x="8" y="10" width="16" height="12" rx="2" stroke="white" stroke-width="2" fill="none"/>
+        </svg>
+        <span>SwiftTracker</span>
+      </a>
+      <nav class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+        <button id="logoutBtn" class="btn btn-sm btn-outline">Sign Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <!-- WELCOME BANNER with session context -->
+    <section class="welcome-section">
+      <div class="welcome-text">
+        <h1 id="welcomeGreeting">Welcome back 👋</h1>
+        <p id="welcomeSubtext">Loading your session…</p>
+      </div>
+      <div class="welcome-actions">
+        <button id="refreshBtn" class="btn btn-sm btn-primary">🔄 Refresh</button>
+        <button id="healthCheckBtn" class="btn btn-sm btn-outline">🏥 Health Check</button>
+      </div>
+    </section>
+
+    <!-- ACCESS & SESSION PANEL -->
+    <section class="session-panel">
+      <div class="session-panel-header">
+        <h2>🔐 Access &amp; Session</h2>
+        <span class="session-badge" id="sessionBadge">Verifying…</span>
+      </div>
+      <div class="session-grid">
+        <div class="session-item">
+          <span class="session-label">IP Address</span>
+          <span class="session-value mono" id="sessIP">—</span>
+          <span class="session-hint">Your current public IP</span>
+        </div>
+        <div class="session-item">
+          <span class="session-label">Country</span>
+          <span class="session-value" id="sessCountry">—</span>
+          <span class="session-hint">Detected via Cloudflare edge</span>
+        </div>
+        <div class="session-item">
+          <span class="session-label">Device</span>
+          <span class="session-value" id="sessDevice">—</span>
+          <span class="session-hint">Operating system</span>
+        </div>
+        <div class="session-item">
+          <span class="session-label">Browser</span>
+          <span class="session-value" id="sessBrowser">—</span>
+          <span class="session-hint">User agent parser</span>
+        </div>
+        <div class="session-item">
+          <span class="session-label">Signed in</span>
+          <span class="session-value" id="sessLogin">—</span>
+          <span class="session-hint">Session start time</span>
+        </div>
+        <div class="session-item">
+          <span class="session-label">Expires</span>
+          <span class="session-value" id="sessExpires">—</span>
+          <span class="session-hint">24h rolling session</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVE DOMAIN BANNER -->
+    <div class="active-domain-banner">
+      <span class="active-domain-label">🎯 Active Tracking Domain</span>
+      <span class="active-domain-value" id="activeDomainValue">—</span>
+      <button id="quickRotateBtn" class="btn btn-sm btn-warning">🔄 Force Rotate</button>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Opens</div>
+        <div class="stat-value" id="statOpens">—</div>
+        <div class="stat-hint">Unique across all campaigns</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Clicks</div>
+        <div class="stat-value" id="statClicks">—</div>
+        <div class="stat-hint">Tracked link interactions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Unsubscribes</div>
+        <div class="stat-value" id="statUnsubs">—</div>
+        <div class="stat-hint">Suppression list additions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Unique Recipients</div>
+        <div class="stat-value" id="statRecipients">—</div>
+        <div class="stat-hint">Distinct email addresses</div>
+      </div>
+    </section>
+
+    <!-- DOMAIN POOL -->
+    <section class="domain-section">
+      <div class="domain-header">
+        <div>
+          <h2>Tracking Domain Pool</h2>
+          <p class="section-hint">Domains used for tracking. Rotation is automatic on spam/down.</p>
+        </div>
+        <button id="addDomainBtn" class="btn btn-sm btn-primary">+ Add Domain</button>
+      </div>
+
+      <div id="addDomainForm" class="add-domain-form" style="display:none;">
+        <div class="form-field">
+          <input type="url" id="newDomainInput" class="text-input" placeholder="https://track2.yourdomain.com" />
+          <span class="field-hint">Must be HTTPS, no path (e.g., https://track2.yourdomain.com)</span>
+        </div>
+        <div class="form-field">
+          <input type="text" id="newDomainLabel" class="text-input" placeholder="Label (e.g. Backup)" />
+          <span class="field-hint">Optional — for your own reference</span>
+        </div>
+        <div class="form-field">
+          <input type="number" id="newDomainPriority" class="text-input" placeholder="100" value="100" />
+          <span class="field-hint">Lower = earlier in rotation queue</span>
+        </div>
+        <div class="form-actions">
+          <button id="saveDomainBtn" class="btn btn-sm btn-primary">Save</button>
+          <button id="cancelDomainBtn" class="btn btn-sm btn-outline">Cancel</button>
+        </div>
+      </div>
+
+      <div class="domain-table-wrapper">
+        <table class="domain-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Domain</th>
+              <th>Label</th>
+              <th>Priority</th>
+              <th>Events (7d)</th>
+              <th>Spam (24h)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="domainTableBody">
+            <tr><td colspan="7" class="table-empty">Loading domains…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rotation-log">
+        <h3>Recent Rotations</h3>
+        <ul id="rotationLog" class="rotation-list">
+          <li class="rotation-empty">No rotations yet.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section class="table-section">
+      <div class="table-header">
+        <div>
+          <h2>Recent Events</h2>
+          <p class="section-hint">Opens, clicks, and unsubscribes across all campaigns.</p>
+        </div>
+        <div class="table-controls">
+          <select id="eventTypeFilter" class="select-input">
+            <option value="">All Events</option>
+            <option value="open">Opens</option>
+            <option value="click">Clicks</option>
+            <option value="unsubscribe">Unsubscribes</option>
+          </select>
+          <input type="text" id="searchInput" class="text-input" placeholder="Search recipient or subject…">
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table class="events-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Recipient</th>
+              <th>Campaign Subject</th>
+              <th>Destination</th>
+              <th>IP</th>
+              <th>Country</th>
+              <th>Domain</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="eventsBody">
+            <tr><td colspan="8" class="table-empty">Loading events…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button id="prevPage" class="btn btn-sm btn-outline" disabled>← Previous</button>
+        <span id="pageInfo">Page 1</span>
+        <button id="nextPage" class="btn btn-sm btn-outline" disabled>Next →</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-copy">SwiftTrackerForCampaign — Built on Cloudflare Pages</p>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
